@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block extrahead %} {{ clients.form.media }} {% endblock %}
+
+{% block 'page_head' %}
+{% load static %}
+
+<!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+<link href="{% static 'cork/assets/css/scrollspyNav.css' %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{% static 'cork/assets/css/forms/theme-checkbox-radio.css' %}">
+<link href="{% static 'cork/assets/css/tables/table-basic.css' %}" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL CUSTOM STYLES -->
+
+<!-- BEGIN THEME GLOBAL STYLES -->
+<link href="{% static 'cork/plugins/flatpickr/flatpickr.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/noUiSlider/nouislider.min.css' %}" rel="stylesheet" type="text/css">
+<!-- END THEME GLOBAL STYLES -->
+
+<!--  BEGIN CUSTOM STYLE FILE  -->
+<link href="{% static 'cork/plugins/flatpickr/custom-flatpickr.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/noUiSlider/custom-nouiSlider.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/bootstrap-range-Slider/bootstrap-slider.css' %}" rel="stylesheet" type="text/css">
+<!--  END CUSTOM STYLE FILE  -->
+
+
+{% endblock %}
+
+{% block 'page_titre' %}Liste de clients{% endblock %}
+
+{% block 'content' %}
+
+<div class="col-lg-12 col-12  layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">                                
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <h4></h4>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+           <form>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        {{ clients.form.date_lte }}
+                        <!-- <input type="text" class="form-control" placeholder="Date debut"> -->
+                    </div>
+                    <div class="col-6">
+                        {{ clients.form.date_gte }}
+                        <!-- <input type="text" class="form-control" placeholder="Date fin"> -->
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-4">
+                        {{ clients.form.nom }}
+                        <!-- <input type="text" class="form-control" placeholder="Nom"> -->
+                    </div>
+                    <div class="col-4">
+                        {{ clients.form.cni }}
+                        <!-- <input type="text" class="form-control" placeholder="CNI"> -->
+                    </div>
+                    <div class="col-4">
+                        {{ clients.form.telephone }}
+                        <!-- <input type="text" class="form-control" placeholder="Telephone"> -->
+                    </div>
+                </div>
+                <input type="submit" name="time" class="btn btn-primary">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="tableFooter" class="col-lg-12 col-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <!-- <h4>Table with Footer</h4> --></br>
+                    <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Ajouter">  
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </a>
+                </div>                       
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-condensed mb-4">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date de naissance</th>
+                            <th>Genre</th>
+                            <th>CNI</th>
+                            <th>Telephone</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        {% for client in clients.qs %}
+                        <tr>
+                            <td>{{client.nom}}</td>
+                            <td>{{client.date_naissance}}</td>
+                            <td>{{client.genre}}</td>
+                            <td>{{client.cni}}</td>
+                            <td>{{client.telephone}}</td>
+                            <td class="text-center">
+                                <ul class="table-controls">
+                                    <li><a href="javascript:void(0);"  data-toggle="tooltip" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+        
+                        {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date de naissance</th>
+                            <th>Genre</th>
+                            <th>CNI</th>
+                            <th>Telephone</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="code-section-container">
+                        
+            </div>
+
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+
+
+{% block 'page_script' %}
+
+<script src="{% static 'cork/assets/js/scrollspyNav.js' %}"></script>
+<script src="{% static 'cork/plugins/flatpickr/flatpickr.js' %}"></script>
+<script src="{% static 'cork/plugins/noUiSlider/nouislider.min.js' %}"></script>
+
+<script src="{% static 'cork/plugins/flatpickr/custom-flatpickr.js' %}"></script>
+<script src="{% static 'cork/plugins/noUiSlider/custom-nouiSlider.js' %}"></script>
+<script src="{% static 'cork/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js' %}"></script>
+
+<script>
+    var f1 = flatpickr(document.getElementById('id_date_lte'), {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    });
+    var f2 = flatpickr(document.getElementById('id_date_gte'), {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+});
+</script>
+
+{% endblock %}

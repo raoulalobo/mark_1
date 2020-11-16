@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block extrahead %} {{ form.media }} {% endblock %}
+
+{% block 'page_head' %}
+{% load static %}
+
+<!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+<link href="{% static 'cork/assets/css/scrollspyNav.css' %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{% static 'cork/assets/css/forms/theme-checkbox-radio.css' %}">
+<link href="{% static 'cork/assets/css/tables/table-basic.css' %}" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL CUSTOM STYLES -->
+
+<!-- BEGIN THEME GLOBAL STYLES -->
+<link href="{% static 'cork/plugins/flatpickr/flatpickr.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/noUiSlider/nouislider.min.css' %}" rel="stylesheet" type="text/css">
+<!-- END THEME GLOBAL STYLES -->
+
+<!--  BEGIN CUSTOM STYLE FILE  -->
+<link href="{% static 'cork/plugins/flatpickr/custom-flatpickr.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/noUiSlider/custom-nouiSlider.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/bootstrap-range-Slider/bootstrap-slider.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'cork/plugins/bootstrap-select/bootstrap-select.min.css' %}">
+<!--  END CUSTOM STYLE FILE  -->
+
+
+{% endblock %}
+
+{% block 'page_titre' %}Formulaire d'evaluation Hotesse/Steward{% endblock %}
+
+{% block 'content' %}
+
+<div class="col-lg-6 col-6  layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">                                
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <h4></h4>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+           <form method="post">
+
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <input type="submit" name="time" class="btn btn-primary">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block 'page_script' %}
+
+<script src="{% static 'cork/assets/js/scrollspyNav.js' %}"></script>
+<script src="{% static 'cork/plugins/flatpickr/flatpickr.js' %}"></script>
+<script src="{% static 'cork/plugins/noUiSlider/nouislider.min.js' %}"></script>
+
+<script src="{% static 'cork/plugins/flatpickr/custom-flatpickr.js' %}"></script>
+<script src="{% static 'cork/plugins/noUiSlider/custom-nouiSlider.js' %}"></script>
+<script src="{% static 'cork/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js' %}"></script>
+<script src="{% static 'cork/plugins/bootstrap-select/bootstrap-select.min.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block extrahead %} {{ req_filter.form.media }} {% endblock %}
+
+{% block 'page_head' %}
+{% load static %}
+
+<!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+<link href="{% static 'cork/assets/css/scrollspyNav.css' %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{% static 'cork/assets/css/forms/theme-checkbox-radio.css' %}">
+<link href="{% static 'cork/assets/css/tables/table-basic.css' %}" rel="stylesheet" type="text/css" />
+<!-- END PAGE LEVEL CUSTOM STYLES -->
+
+<!-- BEGIN THEME GLOBAL STYLES -->
+<link href="{% static 'cork/plugins/flatpickr/flatpickr.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/noUiSlider/nouislider.min.css' %}" rel="stylesheet" type="text/css">
+<!-- END THEME GLOBAL STYLES -->
+
+<!--  BEGIN CUSTOM STYLE FILE  -->
+<link href="{% static 'cork/plugins/flatpickr/custom-flatpickr.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/noUiSlider/custom-nouiSlider.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'cork/plugins/bootstrap-range-Slider/bootstrap-slider.css' %}" rel="stylesheet" type="text/css">
+<!--  END CUSTOM STYLE FILE  -->
+
+
+{% endblock %}
+
+{% block 'page_titre' %}Liste de voyages{% endblock %}
+
+{% block 'content' %}
+
+<div class="col-lg-12 col-12  layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">                                
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <h4></h4>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+           <form>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        {{ req_filter.form.date_lte }}
+                        <!-- <input type="text" class="form-control" placeholder="Date debut"> -->
+                    </div>
+                    <div class="col-6">
+                        {{ req_filter.form.date_gte }}
+                        <!-- <input type="text" class="form-control" placeholder="Date fin"> -->
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        {{ req_filter.form.vehicule }}
+                        <!-- <input type="text" class="form-control" placeholder="Nom"> -->
+                    </div>
+                    <div class="col-6">
+                        {{ req_filter.form.chauffeur }}
+                        <!-- <input type="text" class="form-control" placeholder="CNI"> -->
+                    </div>
+                </div>
+                <input type="submit" name="time" class="btn btn-primary">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="tableFooter" class="col-lg-12 col-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+        <div class="widget-header">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                    <!-- <h4>Table with Footer</h4> --></br>
+                    <a href="{% url 'voyages:voyages.add'  %}" data-toggle="tooltip" data-placement="top" title="Ajouter">  
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </a>
+                    <a href="{% url 'voyages:voyages.rapport'  %}" data-toggle="tooltip" data-placement="top" title="Rapport SMS">  
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </a>
+                </div>                       
+            </div>
+        </div>
+        <div class="widget-content widget-content-area">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-condensed mb-4">
+                    <thead>
+                        <tr>
+                            <th>Dateheure</th>
+                            <th>Vehicule</th>
+                            <th>Chauffeur</th>
+                            <th>Hotesse</th>
+                            <th>Dest.</th>
+                            <th>Prix</th>
+                            <th>Places</th>
+                            <th>BG</th>
+                            <th>Revenus</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        {% for item in req_filter.qs %}
+                        <tr>
+                            <td>{{item.dateheure}}</td>
+                            <td>{{item.vehicule}}</td>
+                            <td>{{item.chauffeur}}</td>
+                            <td>{{item.hotesse}}</td>
+                            <td>{{item.destination}}</td>
+                            <td>{{item.prix}}</td>
+                            <td>{{item.nbr_de_places}}</td>
+                            <td>{{item.billet_gratuit}}</td>
+                            <td>{{item.revenus}}</td>
+                            <td class="text-center">
+                                <ul class="table-controls">
+                                    <li><a href="{% url 'voyages:voyages.update' item.id %}"  data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a></li>
+                                    <li><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+        
+                        {% endfor %}
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Dateheure</th>
+                            <th>Vehicule</th>
+                            <th>Chauffeur</th>
+                            <th>Hotesse</th>
+                            <th>Dest.</th>
+                            <th>Prix</th>
+                            <th>Places</th>
+                            <th>BG</th>
+                            <th>Revenus</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="code-section-container">
+                        
+            </div>
+
+        </div>
+    </div>
+</div> 
+
+
+{% endblock %}
+
+
+{% block 'page_script' %}
+
+<script src="{% static 'cork/assets/js/scrollspyNav.js' %}"></script>
+<script src="{% static 'cork/plugins/flatpickr/flatpickr.js' %}"></script>
+<script src="{% static 'cork/plugins/noUiSlider/nouislider.min.js' %}"></script>
+
+<script src="{% static 'cork/plugins/flatpickr/custom-flatpickr.js' %}"></script>
+<script src="{% static 'cork/plugins/noUiSlider/custom-nouiSlider.js' %}"></script>
+<script src="{% static 'cork/plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js' %}"></script>
+
+<script>
+    var f1 = flatpickr(document.getElementById('id_date_lte'), {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    });
+    var f2 = flatpickr(document.getElementById('id_date_gte'), {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+});
+</script>
+
+{% endblock %}
